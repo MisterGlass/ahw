@@ -95,9 +95,9 @@ class UploadController extends AbstractController
             unlink($this->tempDirectory() . '/' . $filename);
         }
 
-        var_dump($count);die;
         return $this->render('upload/form.html.twig', [
             'form' => $form->createView(),
+            'count' => $count,
         ]);
     }
 

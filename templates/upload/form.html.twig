@@ -1,1 +1,6 @@
-This is my upload form template {{ form(form) }}
+<html><head></head>
+<body>
+{% if count is defined %}Successfully imported {{ count }} purchase events<br>{% endif %}
+Upload a data file:
+{{ form(form) }}
+</body></html>
