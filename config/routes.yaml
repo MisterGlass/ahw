@@ -1,3 +1,9 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+upload_form:
+    path: /uploadform
+    controller: App\Controller\UploadController::form
+    methods:  [GET]
+
+process_form:
+    path: /uploadform
+    controller: App\Controller\UploadController::process
+    methods:  [POST]

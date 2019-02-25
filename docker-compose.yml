@@ -12,7 +12,7 @@ services:
             - ./provisioning/certs:/certs/localhost:ro
     php:
         build:
-            context: ./
+            context: .
             dockerfile: ./provisioning/php.dockerfile
         working_dir: /var/www/project
         volumes:
