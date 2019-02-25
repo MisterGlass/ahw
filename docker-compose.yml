@@ -1,0 +1,51 @@
+version: '2'
+
+services:
+    web:
+        image: nginx:latest
+        ports:
+            - "443:443"
+            - "8080:443"
+        volumes:
+            - .:/var/www/project
+            - ./provisioning/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+            - ./provisioning/certs:/certs/localhost:ro
+    php:
+        build:
+            context: ./
+            dockerfile: ./provisioning/php.dockerfile
+        working_dir: /var/www/project
+        volumes:
+            - .:/var/www/project
+        expose:
+            - "9000"
+        environment:
+            APP_ENV: dev
+            APP_DEBUG: 1
+            DB_HOST: db
+            DB_PORT: 5432
+            DB_DATABASE: PGSQL
+            DB_USERNAME: PGSQL
+            DB_PASSWORD: PGSQL
+    db:
+        image: postgres:latest
+        environment:
+            POSTGRES_DB: PGSQL
+            POSTGRES_USER: PGSQL
+            POSTGRES_PASSWORD: PGSQL
+        ports:
+            - "5000:5432"
+    composer:
+        restart: 'no'
+        image: composer:latest
+        command: install
+        volumes:
+            - .:/app
+        environment:
+            APP_ENV: dev
+            APP_DEBUG: 1
+            DB_HOST: db
+            DB_PORT: 5432
+            DB_DATABASE: PGSQL
+            DB_USERNAME: PGSQL
+            DB_PASSWORD: PGSQL
